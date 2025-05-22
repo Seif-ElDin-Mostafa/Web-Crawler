@@ -12,6 +12,7 @@ A Python-based web crawler specifically designed to handle both static and JavaS
 - Robots.txt compliance checking
 - RSS feed detection
 - Configurable crawling parameters
+- Automatic output file management
 
 ## Requirements
 
@@ -38,7 +39,7 @@ pip install -r requirements.txt
 
 Run the Streamlit dashboard:
 ```bash
-streamlit run streamlit_app.py
+streamlit run src/streamlit_app.py
 ```
 
 The dashboard provides:
@@ -46,21 +47,41 @@ The dashboard provides:
 - Real-time crawling status
 - Data visualization
 - Error handling and debug logs
+- One-click data saving to output directory
 
 ### Command Line Usage
 
 You can also use the crawler from the command line:
 ```bash
-python main.py <base-url> <category-url> --max-pages 3 --output-json data.json --output-csv data.csv
+python src/main.py <base-url> <category-url> --max-pages 3
+```
+
+By default, output files are saved to the `output/` directory:
+- JSON output: `output/data.json`
+- CSV output: `output/data.csv`
+
+You can specify custom output paths:
+```bash
+python src/main.py <base-url> <category-url> --output-json custom.json --output-csv custom.csv
 ```
 
 ## Project Structure
 
-- `main.py`: Entry point for command-line usage
-- `streamlit_app.py`: Streamlit dashboard interface
-- `content_extractor.py`: Core content extraction logic
-- `js_api_handler.py`: Dynamic content rendering with Selenium
-- `robot_parser.py`: Robots.txt parsing and compliance checking
+```
+web-crawler/
+├── src/
+│   ├── main.py              # Command-line entry point
+│   ├── streamlit_app.py     # Streamlit dashboard interface
+│   └── modules/
+│       ├── __init__.py
+│       ├── content_extractor.py  # Core content extraction logic
+│       ├── js_api_handler.py     # Dynamic content rendering with Selenium
+│       └── robot_parser.py       # Robots.txt parsing and compliance
+├── output/                  # Default directory for crawled data
+│   └── .gitkeep            # Placeholder to maintain directory
+├── requirements.txt        # Python dependencies
+└── README.md              # Project documentation
+```
 
 ## License
 

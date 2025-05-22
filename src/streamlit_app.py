@@ -1,12 +1,19 @@
 import streamlit as st
 import pandas as pd
-from robot_parser import parse_robots_txt, can_crawl
-from content_extractor import parse_products_from_page
-from js_api_handler import is_js_heavy_static_check, render_page_with_selenium
+from modules.robot_parser import parse_robots_txt, can_crawl
+from modules.content_extractor import parse_products_from_page, save_to_json, save_to_csv
+from modules.js_api_handler import is_js_heavy_static_check, render_page_with_selenium
 import asyncio
 from urllib.parse import urljoin
 import io
 import sys
+from pathlib import Path
+import os
+
+# --- Setup Output Directory ---
+root_dir = Path(__file__).resolve().parent.parent
+output_dir = root_dir / 'output'
+output_dir.mkdir(exist_ok=True)
 
 # --- UI Sidebar Configuration ---
 st.set_page_config(page_title="Web Crawler Dashboard", layout="wide")
@@ -74,6 +81,14 @@ if run_button:
     st.subheader("📦 Top Extracted Products")
     df = pd.DataFrame(products)
     st.dataframe(df.head(10))
+
+    # Save data option
+    if st.button("Save Current Results"):
+        json_path = output_dir / f"crawl_results_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.json"
+        csv_path = output_dir / f"crawl_results_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        save_to_json(products, str(json_path))
+        save_to_csv(products, str(csv_path))
+        st.success(f"Results saved to output directory!")
 
     # 4) Charts
     st.subheader("📊 Product Price Distribution")

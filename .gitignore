@@ -38,4 +38,9 @@ ENV/
 .env
 
 # Chrome WebDriver
-.wdm/ 
+.wdm/
+
+# Output files
+output/*.json
+output/*.csv
+!output/.gitkeep 
