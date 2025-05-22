@@ -11,7 +11,7 @@ from pathlib import Path
 import os
 
 # --- Setup Output Directory ---
-root_dir = Path(__file__).resolve().parent.parent
+root_dir = Path(__file__).resolve().parent
 output_dir = root_dir / 'output'
 output_dir.mkdir(exist_ok=True)
 

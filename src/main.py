@@ -10,7 +10,7 @@ from modules.js_api_handler import is_js_heavy_static_check, render_page_with_se
 
 def get_default_output_path(filename):
     """Get the default path in the output directory for a given filename"""
-    root_dir = Path(__file__).resolve().parent.parent
+    root_dir = Path(__file__).resolve().parent
     output_dir = root_dir / 'output'
     output_dir.mkdir(exist_ok=True)
     return str(output_dir / filename)
